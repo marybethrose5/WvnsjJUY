@@ -7,7 +7,6 @@ from subprocess import PIPE, STDOUT, run
 ACTION_PATH = Path(os.environ["GITHUB_ACTION_PATH"])
 ENV_PATH = ACTION_PATH / ".black-env"
 ENV_BIN = ENV_PATH / ("Scripts" if sys.platform == "win32" else "bin")
-OPTIONS = os.getenv("INPUT_OPTIONS", default="")
 SRC = os.getenv("INPUT_SRC", default="")
 JUPYTER = os.getenv("INPUT_JUPYTER") == "true"
 BLACK_ARGS = os.getenv("INPUT_BLACK_ARGS", default="")
@@ -19,7 +18,6 @@ version_specifier = VERSION
 if VERSION and VERSION[0] in "0123456789":
     version_specifier = f"=={VERSION}"
 if JUPYTER:
-    extra_deps = "[colorama,jupyter]"
 else:
     extra_deps = "[colorama]"
 req = f"black{extra_deps}{version_specifier}"
